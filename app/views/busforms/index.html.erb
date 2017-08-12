@@ -1,0 +1,137 @@
+
+<br>
+<br>
+
+
+
+<div class="banner bus-banner">
+  <!-- container -->
+  <div class="container">
+    <div class="col-md-8 banner-right">
+      <div id ="map">
+      </div>
+      
+      <div class="row bus_lists">
+      </div>
+      
+    </div>
+    <div class="col-md-4 banner-left">
+      <div class="sap_tabs">  
+        <div class="booking-info about-booking-info">
+          <h2>Catch A Bus</h2>
+        </div>
+        <div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">  
+          <div class="facts about-facts">
+            <div class="booking-form">
+              <div class="book_date">
+
+                <!-- <input id="txtSource" class="maploc" type="text"placeholder="Enter an origin location">  -->
+                <%#= select_tag "routesource", options_for_select(BusDetail.uniq.pluck(:source_first).collect{|b| b}), {include_blank: "Select a Source", class: "form-control chosen-select" } %>
+                <input type="text" name="country" id="SourceValue"/>
+                <br>
+                <br>
+                <br>
+
+                <!-- <input id="txtDestination" class="maploc" type="text"placeholder="Enter a destination location">   -->
+
+                <%#= select_tag "routedestination", options_for_select(BusDetail.uniq.pluck(:destination_first).collect{|b| b}), {include_blank: "Select a Destination", class: "form-control chosen-select" } %>                  
+                <input type="text" name="country" id="DestinationValue"/>
+                
+                
+              </div>
+              
+              <div class="clearfix"></div>
+            </div>
+            <br>
+            <div class=""reservation"">
+              
+              <input type="button" value="Search Buses" onclick="GetRoute()" />
+              
+            </div>
+
+            <div id="dvDistance"></div>
+            <div id="directions_panel"></div>
+            
+            <div class="clearfix"></div>
+            
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+<br>
+<br>
+
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwMxo4Zne-NBl8A8h-MBYlgjxppC_5rLc&libraries=places&callback=initMap"async defer>
+    </script>
+
+
+
+    <%= search_form_for @search do |f| %>
+    <div class="container">  
+      <div class="col-md-4">
+        <div class="field">
+          <%= f.label :title_cont, "Search By Bus Number" %>
+          <%= f.text_field :title_cont %>
+        </div>
+
+        <div class="actions"><%= f.submit "Search" %> </div>
+      </div>
+    </div>
+    <% end %>
+
+    <% @busforms.each do |busform| %>
+
+
+    <div class="col-md-4">
+      <div class="busno_row">
+        <h3 class="busform_title"><%= link_to busform.title, busform %></h3>
+        <p class="busform_sub_title"><%= busform.description %></p>
+      </div>
+    </div> 
+    <% end %>
+
+
+
+    <div class="links">
+      <%#= link_to "New Bus Form", new_busform_path %>
+      <%# link_to 'Delete', busforms_path(@busform), method: :delete, data: { confirm: "Are u sure"} %>
+      
+      <%#= link_to 'Back', busforms_path %>
+    </div>
+  </div>
+
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+
+<script type="text/javascript">
+  $( function() {
+    var sourceFirst = []
+    <% BusDetail.uniq.pluck(:source_first).each do |sf| %>
+      sourceFirst.push("<%= sf %>")
+    <% end %>
+    $( "#SourceValue" ).autocomplete({
+      source: sourceFirst
+    });
+
+    var destiFirst = []
+    <% BusDetail.uniq.pluck(:destination_first).each do |sf| %>
+      destiFirst.push("<%= sf %>")
+    <% end %>
+    $( "#DestinationValue" ).autocomplete({
+      source: destiFirst
+    });
+  } );
+</script>

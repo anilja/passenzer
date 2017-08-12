@@ -1,0 +1,16 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <p><strong>Name: </strong><%= bus_list.try(:name) %></p>
+    <p><strong>Number: </strong><%= bus_list.try(:number) %></p>
+    <p><strong>Source: </strong><%= bus_list.try(:source) %></p>
+    <p><strong>Destination: </strong><%= bus_list.try(:destination) %></p>
+    <p><strong>Distance: </strong><%= get_route_distance(bus_list) %></p>
+    <div class="route-details">
+      <h2> Routes </h2>
+      <% (bus_list.bus_return_routes + bus_list.bus_routes).each_with_index do |br, i| %>
+        <p><strong>Route Name: </strong><span class="route_name"><%= br.name %></span></p>
+        <hr>
+      <% end %>
+    </div>
+    </div>
+  </div>

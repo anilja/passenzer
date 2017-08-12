@@ -1,0 +1,24 @@
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h2> Buses Available</h2>
+        <% bus_lists.each do |b| %>
+          <div class="col-md-6">
+            <button class="btn buses" data-busid="<%= b.id %>"><%= b.try(:number) %></button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <% bus_list = get_correct_bus(source, desti) %>
+  <% if bus_list.present? %>
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div id="dvDistance"></div>
+          <div id="bus_details_list"></div>
+        </div>
+      </div>
+      <%#= render partial: "busforms/show_bus", locals: {bus_list: bus_list} %>
+    </div>
+  <% end %>

@@ -1,0 +1,56 @@
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwMxo4Zne-NBl8A8h-MBYlgjxppC_5rLc&libraries=places&callback=initMap"async defer></script>
+<div class="bus-map">
+  <div id="map">
+  </div>
+</div>
+<%= simple_form_for @bus_detail, html: {id: "first_form"} do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :name, placeholder: "Bus Name" %>
+    <%= f.input :number, placeholder: "Bus Number" %>
+    <%= f.input :source, input_html: { id: "txtSource", placeholder: "Source Address" } %>
+    <%= f.input :destination, input_html: { id: "txtDestination", placeholder: "Destination Address" } %>
+    <div class="bus_routes">
+      <%= f.simple_fields_for :bus_routes do |bus_route| %>
+        <%= render 'bus_route_fields', f: bus_route %>
+      <% end %>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+      </div>
+      <div id="busroute" class="col-md-4">
+        <%= link_to_add_association "Add Route", f, :bus_routes, class: "btn btn-default" %>
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="col-md-8">
+        <%= f.input :is_return_route, label: "Return in same route", input_html: { class: "is_return_route" } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="return-routes">
+    <div class="bus_routes">
+      <%= f.simple_fields_for :bus_return_routes do |bus_return_route| %>
+        <%= render 'bus_return_route_fields', f: bus_return_route %>
+      <% end %>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+      </div>
+      <div id="busreturnroute" class="col-md-6">
+        <p class="error-text"></p>
+        <%= link_to_add_association "Add Return Route", f, :bus_return_routes, class: "btn btn-default return-btn" %>
+      </div>
+      <div class="col-md-3">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "submit", class: "btn btn_red first-bus-submit" %>
+  </div>
+<% end %>

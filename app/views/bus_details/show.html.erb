@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @bus_detail.name %>
+</p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @bus_detail.number %>
+</p>
+
+<p>
+  <strong>Source:</strong>
+  <%= @bus_detail.source %>
+</p>
+
+<p>
+  <strong>Destination:</strong>
+  <%= @bus_detail.destination %>
+</p>
+
+<p>
+  <strong>Source lat:</strong>
+  <%= @bus_detail.source_lat %>
+</p>
+
+<p>
+  <strong>Destination lat:</strong>
+  <%= @bus_detail.destination_lat %>
+</p>
+
+<p>
+  <strong>Source lang:</strong>
+  <%= @bus_detail.source_lang %>
+</p>
+
+<p>
+  <strong>Destination lang:</strong>
+  <%= @bus_detail.destination_lang %>
+</p>
+
+<%= link_to 'Edit', edit_bus_detail_path(@bus_detail) %> |
+<%= link_to 'Back', bus_details_path %>

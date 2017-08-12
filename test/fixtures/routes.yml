@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  bus: one
+  bustops: one
+
+two:
+  name: MyString
+  bus: two
+  bustops: two

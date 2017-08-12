@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+<br>
+<h2 class="busform_title"><%= @busform.title %></h2>
+<p class="busform_sub_title"><%= @busform.description %></p>
+
+<p>
+  <strong>BUS STOPS</strong>
+</p>
+
+<div class = "container">
+<div class = "col-lg-4">
+
+<div id="stops_wrapper">
+ <%= render @busform.stops %>
+	<div id="sform">
+		<%= render "stops/form" %>
+	</div>
+</div>
+</div>
+
+						<div class = "col-lg-6">
+
+												<div id ="map">
+												</div>
+						</div>						
+
+</div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwMxo4Zne-NBl8A8h-MBYlgjxppC_5rLc&libraries=places&callback=initMap"async defer>
+</script>
+
+
+<%= link_to 'Edit', edit_busform_path(@busform) %> |
+<%= link_to 'Delete', busform_path(@busform), method: :delete, data: { confirm: "Are you sure?" }  %> |
+	
+	<%= link_to 'Back', busforms_path %>

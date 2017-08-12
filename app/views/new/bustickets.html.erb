@@ -1,0 +1,210 @@
+		<!-- container -->
+		<div class="container">
+			                             			<div class="col-md-4 banner-right">
+													<div id ="map">
+													</div>
+				<!--FlexSlider-->
+			</div>
+			<div class="col-md-8 banner-left">
+				<div class="sap_tabs">	
+					<div class="booking-info about-booking-info">
+						<h2>Book Bus Tickets Online - Coming soon</h2>
+					</div>
+					<div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">	
+						  <!---->		  	 
+									<div class="facts about-facts">
+										<div class="booking-form">
+										<link rel="stylesheet" href="css/jquery-ui.css" />
+											<!---strat-date-piker---->
+											<script>
+												$(function() {
+													$( "#datepicker,#datepicker1" ).datepicker();
+												});
+											</script>
+											<!---/End-date-piker---->
+											<!-- Set here the key for your domain in order to hide the watermark on the web server -->
+											
+											<div class="online_reservation">
+												<div class="b_room">
+															<div class="booking_room">
+																<div class="reservation">
+																	<ul>		
+																		<li class="span1_of_1 desti">
+																			 <h5>From</h5>
+																			 <div class="book_date">
+																				 <form>
+																					<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+																					<input id="origin-input" class="maploc" type="text"placeholder="Enter an origin location">
+																				 </form>
+																			 </div>					
+																		 </li>
+																		 <li class="span1_of_1 left desti">
+																			 <h5>To</h5>
+																			 <div class="book_date">
+																			 <form>
+																				<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+																				<input id="destination-input" class="maploc" type="text"placeholder="Enter a destination location">
+																			 </form>
+																			 </div>		
+																		 </li>
+																		 <div class="clearfix"></div>
+																	</ul>
+																</div>
+																<div class="reservation">
+																	<ul>	
+																		 <li  class="span1_of_1">
+																			 <h5>Departing</h5>
+																			 <div class="book_date">
+																			 <form>
+																				<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+																				<input type="date" value="Select date" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Select date';}">
+																			</form>
+																			 </div>		
+																		 </li>
+																		 <li class="span1_of_1 left">
+																			 <h5>Adults (18+)</h5>
+																			 <!----------start section_room----------->
+																			 <div class="section_room">
+																				  <select id="country" onchange="change_country(this.value)" class="frm-field required">
+																						<option value="null">1</option>
+																						<option value="null">2</option>         
+																						<option value="AX">3</option>
+																						<option value="AX">4</option>
+																						<option value="AX">5</option>
+																						<option value="AX">6</option>
+																				  </select>
+																			 </div>	
+																		</li>
+																		<li class="span1_of_1 left">
+																			 <h5>Children (0-17)</h5>
+																			 <!----------start section_room----------->
+																			 <div class="section_room">
+																				  <select id="country" onchange="change_country(this.value)" class="frm-field required">
+																						<option value="null">1</option>
+																						<option value="null">2</option>         
+																						<option value="AX">3</option>
+																						<option value="AX">4</option>
+																						<option value="AX">5</option>
+																						<option value="AX">6</option>
+																				  </select>
+																			 </div>	
+																		</li>
+																		 <div class="clearfix"></div>
+																	</ul>
+																</div>
+																<div class="reservation">
+																	<ul>	
+																		 <li class="span1_of_3">
+																				<div class="date_btn">
+																					<form>
+																						<input type="submit" value="Search">
+																					</form>
+																				</div>
+																		 </li>
+																		 <div class="clearfix"></div>
+																	</ul>
+																</div>
+															</div>
+															<div class="clearfix"></div>
+												</div>
+											</div>
+											<!---->
+										</div>	
+									</div>
+					</div>	
+				</div>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+		<!-- //container -->
+	</div>	
+
+<script>
+
+
+
+
+function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          mapTypeControl: false,
+          center: {lat: 17.3850, lng: 78.4867},
+
+          zoom: 13
+        });
+
+        new AutocompleteDirectionsHandler(map);
+      }
+
+function AutocompleteDirectionsHandler(map) {
+        this.map = map;
+        this.originPlaceId = null;
+        this.destinationPlaceId = null;
+        this.travelMode = 'WALKING';
+        var originInput = document.getElementById('origin-input');
+        var destinationInput = document.getElementById('destination-input');
+        this.directionsService = new google.maps.DirectionsService;
+        this.directionsDisplay = new google.maps.DirectionsRenderer;
+        this.directionsDisplay.setMap(map);
+
+        var originAutocomplete = new google.maps.places.Autocomplete(
+            originInput, {placeIdOnly: true});
+        var destinationAutocomplete = new google.maps.places.Autocomplete(
+            destinationInput, {placeIdOnly: true});
+        
+		
+		
+        this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
+        this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+
+      }
+
+AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
+        var radioButton = document.getElementById(id);
+        var me = this;
+        radioButton.addEventListener('click', function() {
+          me.travelMode = mode;
+          me.route();
+        });
+      };
+
+      AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(autocomplete, mode) {
+        var me = this;
+        autocomplete.bindTo('bounds', this.map);
+        autocomplete.addListener('place_changed', function() {
+          var place = autocomplete.getPlace();
+          if (!place.place_id) {
+            window.alert("Please select an option from the dropdown list.");
+            return;
+          }
+          if (mode === 'ORIG') {
+            me.originPlaceId = place.place_id;
+          } else {
+            me.destinationPlaceId = place.place_id;
+          }
+          me.route();
+        });
+
+      };
+
+      AutocompleteDirectionsHandler.prototype.route = function() {
+        if (!this.originPlaceId || !this.destinationPlaceId) {
+          return;
+        }
+        var me = this;
+
+        this.directionsService.route({
+          origin: {'placeId': this.originPlaceId},
+          destination: {'placeId': this.destinationPlaceId},
+          travelMode: this.travelMode
+        }, function(response, status) {
+          if (status === 'OK') {
+            me.directionsDisplay.setDirections(response);
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+      };
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwMxo4Zne-NBl8A8h-MBYlgjxppC_5rLc&libraries=places&callback=initMap"async defer>
+</script>

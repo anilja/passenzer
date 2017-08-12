@@ -1,0 +1,215 @@
+
+<div class="container">
+	<div class="row">
+		
+				
+				
+				
+				<div class="col-sm-3" >
+				<div class="go"> Let's Drive
+
+					<input id="origin-input" class="maploc" type="text"placeholder="Enter an origin location">
+
+					<input id="destination-input" class="maploc" type="text"placeholder="Enter a destination location">
+
+					<div id="mode-selector" class="contols">
+					
+						<input type="radio" name="type" id="changemode-walking" onclick="checked">
+						<label for="changemode-walking">Walk</label>
+
+						<input type="radio" name="type" id="changemode-transit">					<label for="changemode-transit">Drive</label>
+
+<div id="main-icons">
+<a href=""><%= image_tag("propics/android.png") %></a>
+<a href=""><%= image_tag("propics/apple.png") %></a>
+</div>
+
+
+					</div>
+				</div>
+				</div>
+
+
+
+					<div class="col-sm-3" >
+					
+					<div id="map"></div>
+
+				
+			
+					</div>
+
+					
+					<div class="col-sm-3" >
+					
+					
+
+								<a href="cabs.html">								
+								<div class="b1">
+								<%= image_tag("propics/taxi.png") %>
+								<a href="/new/cabs.html" button type="button" class="btn btn-success" role="button">City Cabs</a>
+								</div>
+								</a>
+								
+								
+								<a href="metro.html">								
+								<div class="b2">
+								<%= image_tag("propics/train1.png") %>
+								<a href="/new/metro.html" button type="button" class="btn btn-success" role="button">Metro Rail</a>
+								</div>
+								</a>
+								
+							
+								<a href="citybus.html">							
+								<div class="b6">
+								<%= image_tag("propics/bus1.png") %>
+								<a href="/busforms" button type="button" class="btn btn-success" role="button">City Bus</a>
+								</div>
+								</a>
+
+
+								<a href="train.html">
+								<div class="b3">
+								<%= image_tag("propics/train1.png") %>
+								<a href="/new/train.html" class="btn btn-info" role="button">Trains </a>
+								</div>
+								</a>
+						</div>
+									
+									
+									<div class="col-sm-3" >
+										<a href="/new/flights.html">
+										<div class="b4">
+										<%= image_tag("propics/flight1.png") %>
+										<a href="/new/flights.html" class="btn btn-info" role="button"">Flights</a>
+										</div>
+										</a>
+										
+								        <a href="/new/bustickets.html">								
+										<div class="b5">
+								        <%= image_tag("propics/bus1.png") %>
+								        <a href="/new/bustickets.html" class="btn btn-success" role="button">Bus Tickets</a>
+										</div>
+										</a>
+
+								       
+						</div>
+									
+									
+									<div class="col-sm-3" >
+										
+										
+										<div class="fresh-cities">Our Cities
+				                        </div>
+									</div>
+					
+	</div>	
+ </div>
+
+ <script>
+
+
+
+
+function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          mapTypeControl: false,
+          center: {lat: 17.3850, lng: 78.4867},
+
+          zoom: 13
+        });
+
+        new AutocompleteDirectionsHandler(map);
+      }
+
+function AutocompleteDirectionsHandler(map) {
+        this.map = map;
+        this.originPlaceId = null;
+        this.destinationPlaceId = null;
+        this.travelMode = 'WALKING';
+        var originInput = document.getElementById('origin-input');
+        var destinationInput = document.getElementById('destination-input');
+        this.directionsService = new google.maps.DirectionsService;
+        this.directionsDisplay = new google.maps.DirectionsRenderer;
+        this.directionsDisplay.setMap(map);
+
+        var originAutocomplete = new google.maps.places.Autocomplete(
+            originInput, {placeIdOnly: true});
+        var destinationAutocomplete = new google.maps.places.Autocomplete(
+            destinationInput, {placeIdOnly: true});
+        
+		
+		
+        this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
+        this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+
+      }
+
+AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
+        var radioButton = document.getElementById(id);
+        var me = this;
+        radioButton.addEventListener('click', function() {
+          me.travelMode = mode;
+          me.route();
+        });
+      };
+
+      AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(autocomplete, mode) {
+        var me = this;
+        autocomplete.bindTo('bounds', this.map);
+        autocomplete.addListener('place_changed', function() {
+          var place = autocomplete.getPlace();
+          if (!place.place_id) {
+            window.alert("Please select an option from the dropdown list.");
+            return;
+          }
+          if (mode === 'ORIG') {
+            me.originPlaceId = place.place_id;
+          } else {
+            me.destinationPlaceId = place.place_id;
+          }
+          me.route();
+        });
+
+      };
+
+      AutocompleteDirectionsHandler.prototype.route = function() {
+        if (!this.originPlaceId || !this.destinationPlaceId) {
+          return;
+        }
+        var me = this;
+
+        this.directionsService.route({
+          origin: {'placeId': this.originPlaceId},
+          destination: {'placeId': this.destinationPlaceId},
+          travelMode: this.travelMode
+        }, function(response, status) {
+          if (status === 'OK') {
+            me.directionsDisplay.setDirections(response);
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+      };
+
+    </script>
+
+
+ <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwMxo4Zne-NBl8A8h-MBYlgjxppC_5rLc&libraries=places&callback=initMap"async defer>
+</script>
+
+
+   <script src="js/index.js">
+</script>
+
+<br>
+<br>
+<br>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+

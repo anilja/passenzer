@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row">
+    <p id="notice"><%= notice %></p>
+
+    <h1>Bus Details</h1>
+
+    <table class="table">
+    <div class="pull-right"><%= link_to 'New Bus Detail', new_bus_detail_path %></div>
+    <div class="pull-left"><input type="submit" class="btn btn_red delete_selected" value="Delete Selected Row"></div>
+      <thead>
+        <tr>
+        <th></th>
+          <th>Name</th>
+          <th>Number</th>
+          <th>Source</th>
+          <th>Destination</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @bus_details.each do |bus_detail| %>
+          <tr>
+            <td><%= check_box_tag("bus_name_list", value = bus_detail.id, checked = false, options = {class: "delete_bus"}) %></td>
+            <td><%= bus_detail.name %></td>
+            <td><%= bus_detail.number %></td>
+            <td><%= bus_detail.source %></td>
+            <td><%= bus_detail.destination %></td>
+            <td><%= link_to 'Show', bus_detail %></td>
+            <td><%= link_to 'Edit', edit_bus_detail_path(bus_detail) %></td>
+            <td><%= link_to 'Destroy', bus_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <br>
+
+
+    <%= will_paginate @bus_details %>
+  </div>
+</div>

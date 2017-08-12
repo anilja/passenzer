@@ -1,0 +1,4 @@
+<%= form_for([@busform, @busform.stops.build]) do |f| %>
+	<%= f.text_field :content, placeholder: " New Stop" %>
+	<%= f.submit %>
+<% end %>

@@ -1,0 +1,85 @@
+$(".bus_lists").html("<%= j(render partial: 'busforms/bus_lists', locals: {bus_lists: @buses, source: @source, desti: @desti} )%>")
+
+
+var directionsDisplay = new google.maps.DirectionsRenderer();
+    var directionsService = new google.maps.DirectionsService();
+    var hyderabad = new google.maps.LatLng(17.3850, 78.4867);
+    var map = {
+        mapTypeControl: false,
+        zoom: 7,
+        center: hyderabad
+    };
+
+ map = new google.maps.Map(document.getElementById('map'), map);  
+    directionsDisplay.setMap(map);
+    
+
+ 
+ 
+    //*********DIRECTIONS AND ROUTE**********************//
+    // source = document.getElementById("txtSource").value;
+    // destination = document.getElementById("txtDestination").value;
+    var source = $("#SourceValue").val();
+        var destination = $("#DestinationValue").val();
+    var waypts = [];
+
+    var route = $('.route_name')
+
+    for(var i = 0; i < route.length; i++){
+      waypts.push({
+        location: route[i].innerText,
+        stopover: true
+      });
+    }
+
+    console.log(waypts)
+    console.log("waypts")
+ 
+    var request = {
+        origin: source,
+        destination: destination,
+        waypoints: waypts,
+        optimizeWaypoints: true,
+        // unitSystem: google.maps.UnitSystem.IMPERIAL,
+        travelMode: google.maps.TravelMode.WALKING
+    };
+    directionsService.route(request, function (response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+          directionsDisplay.setDirections(response);
+          var route = response.routes[0];
+          var summaryPanel = document.getElementById('bus_details_list');
+          summaryPanel.innerHTML = '';
+          // For each route, display summary information.
+          for (var i = 0; i < route.legs.length; i++) {
+            var routeSegment = i + 1;
+            summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment + '</b><br>';
+            summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+            summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+            summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+          }
+        }
+    });
+ 
+    //*********DISTANCE AND DURATION**********************//
+    var service = new google.maps.DistanceMatrixService();
+    service.getDistanceMatrix({
+        origins: [source],
+        destinations: [destination],
+        travelMode: google.maps.TravelMode.DRIVING,
+        unitSystem: google.maps.UnitSystem.METRIC,
+        avoidHighways: true,
+        avoidTolls: true
+    }, function (response, status) {
+        if (status == google.maps.DistanceMatrixStatus.OK && response.rows[0].elements[0].status != "ZERO_RESULTS") {
+            console.log(response.rows)
+            var distance = response.rows[0].elements[0].distance.text;
+            var duration = response.rows[0].elements[0].duration.text;
+            var dvDistance = document.getElementById("dvDistance");
+           dvDistance.innerHTML = "";
+            dvDistance.innerHTML += "Distance: " + distance + "<br />";
+            dvDistance.innerHTML += "Duration:" + duration;
+ 
+        } else {
+            alert("Unable to find the distance via road.");
+        }
+    });

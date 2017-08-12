@@ -1,0 +1,25 @@
+<div class="nested-fields">
+  <div class="box box-info">
+    <div class="box-header with-border">
+      <h3 class="box-title">Bus Route</h3>
+      <div class="box-tools pull-right">
+        <%= link_to_remove_association f do %>
+        <button type="button" class="btn btn-box-tool"><i class="fa fa-times"></i></button>
+        <% end %>
+      </div>
+    </div>
+    <div class="box-body">
+      <div class="form-inputs">
+        <%= f.input :name, input_html: { class: "txtRoute", placeholder: "Route Name" } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  input = document.getElementsByClassName('txtRoute')
+    console.log(input)
+    for (i = 0; i < input.length; i++) {
+      new google.maps.places.SearchBox(input[i]);
+    }
+</script>
