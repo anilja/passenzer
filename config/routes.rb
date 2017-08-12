@@ -16,7 +16,6 @@ Rails.application.routes.draw do
   get 'new/signup'=> 'new#signup'
   get 'new/bustickets'=> 'new#bustickets'
   get 'new/cabs'=> 'new#cabs'
-  get 'new/citybus'=> 'new#citybus'
   get 'new/flights'=> 'new#flights'
   get 'new/home'=> 'new#home'
   get 'new/metro'=> 'new#metro'
