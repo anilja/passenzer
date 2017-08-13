@@ -41,9 +41,13 @@ gem 'geocoder'
 gem "cocoon"
 gem 'chosen-rails'
 gem 'jquery-turbolinks'
+
+group :production do
+	gem 'pg'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'sqlite3'
 end
 
 group :development do
