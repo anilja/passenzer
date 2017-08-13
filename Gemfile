@@ -39,7 +39,7 @@ gem 'geocoder'
 gem "cocoon"
 gem 'chosen-rails'
 gem 'jquery-turbolinks'
-gem 'taps'
+#gem 'taps'
 
 group :production do
 	gem 'pg'
@@ -60,7 +60,7 @@ group :development do
 end
 
 group :development do
-  gem 'mysql2'
+  #gem 'mysql2'
  end 
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
