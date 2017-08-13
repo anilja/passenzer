@@ -12,55 +12,58 @@
 
 ActiveRecord::Schema.define(version: 20170803070214) do
 
-  create_table "bus_details", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "bus_details", force: :cascade do |t|
     t.string   "name"
     t.string   "number"
     t.string   "source"
     t.string   "destination"
-    t.float    "source_lat",        limit: 24
-    t.float    "destination_lat",   limit: 24
-    t.float    "source_lang",       limit: 24
-    t.float    "destination_lang",  limit: 24
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
-    t.boolean  "is_main",                      default: false
+    t.float    "source_lat"
+    t.float    "destination_lat"
+    t.float    "source_lang"
+    t.float    "destination_lang"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.boolean  "is_main",           default: false
     t.string   "source_first"
     t.string   "source_last"
     t.string   "destination_first"
     t.string   "destination_last"
-    t.boolean  "is_return_route",              default: true
+    t.boolean  "is_return_route",   default: true
   end
 
-  create_table "bus_return_routes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "bus_return_routes", force: :cascade do |t|
     t.string   "name"
-    t.float    "source_distance",      limit: 24
-    t.float    "destination_distance", limit: 24
+    t.float    "source_distance"
+    t.float    "destination_distance"
     t.integer  "bus_detail_id"
     t.string   "first_name"
     t.string   "last_name"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
-  create_table "bus_routes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "bus_routes", force: :cascade do |t|
     t.string   "name"
-    t.float    "source_distance",      limit: 24
-    t.float    "destination_distance", limit: 24
+    t.float    "source_distance"
+    t.float    "destination_distance"
     t.integer  "bus_detail_id"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.string   "first_name"
     t.string   "last_name"
   end
 
-  create_table "busforms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "busforms", force: :cascade do |t|
     t.string   "title"
-    t.text     "description", limit: 65535
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
-  create_table "roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "roles", force: :cascade do |t|
     t.string   "name"
     t.string   "resource_type"
     t.integer  "resource_id"
@@ -70,7 +73,7 @@ ActiveRecord::Schema.define(version: 20170803070214) do
     t.index ["name"], name: "index_roles_on_name", using: :btree
   end
 
-  create_table "stops", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "stops", force: :cascade do |t|
     t.string   "content"
     t.integer  "busform_id"
     t.datetime "created_at", null: false
@@ -78,7 +81,7 @@ ActiveRecord::Schema.define(version: 20170803070214) do
     t.index ["busform_id"], name: "index_stops_on_busform_id", using: :btree
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -96,7 +99,7 @@ ActiveRecord::Schema.define(version: 20170803070214) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
-  create_table "users_roles", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "users_roles", id: false, force: :cascade do |t|
     t.integer "user_id"
     t.integer "role_id"
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
