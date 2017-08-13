@@ -39,6 +39,7 @@ gem 'geocoder'
 gem "cocoon"
 gem 'chosen-rails'
 gem 'jquery-turbolinks'
+gem 'taps'
 
 group :production do
 	gem 'pg'
