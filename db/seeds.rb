@@ -13,4 +13,3 @@ User.find_or_create_by(email: "admin@busappy.com") do |u|
 end
 
 @user = User.find_by_email("admin@busappy.com")
-@user.add_role :admin if @user.roles.blank?
